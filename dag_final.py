@@ -3,7 +3,7 @@ import sys
 from airflow.models import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.utils.dates import days_ago
-scriptpath = "/boto/"
+scriptpath = "./boto/"
 sys.path.append(os.path.abspath(scriptpath))
 import create_bucket_dos
 
@@ -23,7 +23,7 @@ def print_success_message(**kwargs):
     print("Success!!")
 
 create = PythonOperator(task_id='create_bucket',
-python_callable=create_bucket_dos.bucket('bucket-from-airflow'),
+python_callable=create_bucket_dos.bucket('bucket-from-airflow-dos'),
 dag=dag)
 
 success = PythonOperator(task_id='success',
