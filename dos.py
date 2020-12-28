@@ -22,16 +22,16 @@ def print_end_message(**kwargs):
 externalsensor1 = ExternalTaskSensor(
         task_id='dependencia_uno_completed_Status',
         external_dag_id='dependencia_uno',
-        external_task_id=None, 
+        external_task_id=None,
         check_existence=True)
 
 
 success = PythonOperator(task_id='success',
-                         python_callable=print_success_message,
-                         dag=dag)
+                        python_callable=print_success_message,
+                        dag=dag)
 
 end = PythonOperator(task_id='end',
-                         python_callable=print_end_message,
-                         dag=dag)
+                        python_callable=print_end_message,
+                        dag=dag)
 
 [externalsensor1] >> success >> end
