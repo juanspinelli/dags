@@ -1,7 +1,9 @@
 from airflow.models import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.utils.dates import days_ago
-import create_bucket_dos
+import logging
+import boto3
+from botocore.exceptions import ClientError
 
 default_args = {
     'owner' : 'boto3',
@@ -15,15 +17,33 @@ dag = DAG(
     schedule_interval='@once'
 )
 
-def print_success_message(**kwargs):
-    print("Success!!")
+session = boto3.session.Session()
 
-create = PythonOperator(task_id='create_bucket',
-python_callable=create_bucket_dos.bucket('bucket-from-airflow-dos'),
+s3_client = session.client(
+    service_name='s3',
+    endpoint_url='http://192.168.49.2:31566',
+)
+
+region = session.region_name
+
+def inicio(**kwargs):
+    print("Iniciando proceso...")
+
+def bucket(bucket_name, s3_client=s3_client, region=region):
+    try:
+        location = {'LocationConstraint': region}
+        s3_client.create_bucket(Bucket=bucket_name,
+                                CreateBucketConfiguration=location)
+        print('Bucket creado exitosamente')
+    except:
+        print('El bucket ya existe')
+
+create_bucket = PythonOperator(task_id='create_bucket',
+python_callable=bucket('bucket-from-airflow-dos'),
 dag=dag)
 
-success = PythonOperator(task_id='success',
-                        python_callable=print_success_message,
+inicio = PythonOperator(task_id='inicio',
+                        python_callable=inicio,
                         dag=dag)
 
-success >> create
+inicio >> create_bucket
