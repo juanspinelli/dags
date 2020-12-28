@@ -11,7 +11,7 @@ s3_client = session.client(
 
 region = session.region_name
 
-def create_bucket(bucket_name, s3_client=s3_client, region=region):
+def bucket(bucket_name, s3_client=s3_client, region=region):
     try:
         location = {'LocationConstraint': region}
         s3_client.create_bucket(Bucket=bucket_name,

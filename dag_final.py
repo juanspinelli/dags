@@ -23,7 +23,7 @@ def print_success_message(**kwargs):
     print("Success!!")
 
 create = PythonOperator(task_id='create_bucket',
-python_callable=create_bucket.create_bucket('bucket-from-airflow'),
+python_callable=create_bucket.bucket('bucket-from-airflow'),
 dag=dag)
 
 success = PythonOperator(task_id='success',
