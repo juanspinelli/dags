@@ -19,8 +19,15 @@ dag = DAG(
     schedule_interval='@once'
 )
 
-create_bucket = PythonOperator(task_id='create_bucket',
+def print_success_message(**kwargs):
+    print("Success!!")
+
+create = PythonOperator(task_id='create_bucket',
 python_callable=create_bucket.create_bucket('bucket-from-airflow'),
 dag=dag)
 
-create_bucket
+success = PythonOperator(task_id='success',
+                        python_callable=print_success_message,
+                        dag=dag)
+
+success >> create
