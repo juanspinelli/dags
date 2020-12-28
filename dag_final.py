@@ -5,7 +5,7 @@ from airflow.operators.python_operator import PythonOperator
 from airflow.utils.dates import days_ago
 scriptpath = "./boto/"
 sys.path.append(os.path.abspath(scriptpath))
-import create_bucket
+import create_bucket_dos
 
 default_args = {
     'owner' : 'boto3',
