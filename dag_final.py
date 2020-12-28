@@ -27,7 +27,7 @@ s3_client = session.client(
 )
 
 #region = session.region_name
-bucket_name='bucket-from-airflow-tres'
+bucket_name='bucket-from-airflow-cuatro'
 
 def inicio(**kwargs):
     print("Iniciando proceso...")
