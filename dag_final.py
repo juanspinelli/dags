@@ -29,7 +29,7 @@ region = session.region_name
 def inicio(**kwargs):
     print("Iniciando proceso...")
 
-def bucket(**kwargs, bucket_name, s3_client=s3_client, region=region):
+def bucket(bucket_name, s3_client=s3_client, region=region):
     try:
         location = {'LocationConstraint': region}
         s3_client.create_bucket(Bucket=bucket_name,
