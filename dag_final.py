@@ -24,13 +24,13 @@ s3_client = session.client(
     endpoint_url='http://192.168.49.2:31566',
 )
 
-region = session.region_name
+#region = session.region_name
 bucket_name='bucket-from-airflow-tres'
 
 def inicio(**kwargs):
     print("Iniciando proceso...")
 
-def bucket(bucket_name=bucket_name, s3_client=s3_client, region=region):
+def bucket(bucket_name=bucket_name, s3_client=s3_client, region='us-west-2'):
 
     print('Region: ', region)
     print('Bucket name: ', bucket_name)
