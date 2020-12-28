@@ -46,4 +46,5 @@ inicio = PythonOperator(task_id='inicio',
                         python_callable=inicio,
                         dag=dag)
 
-inicio >> create_bucket
+inicio
+# >> create_bucket
