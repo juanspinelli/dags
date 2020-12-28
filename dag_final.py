@@ -1,9 +1,13 @@
+###################################################################################
+
 from airflow.models import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.utils.dates import days_ago
 import logging
 import boto3
 from botocore.exceptions import ClientError
+
+###################################################################################
 
 default_args = {
     'owner' : 'boto3',
@@ -17,6 +21,8 @@ dag = DAG(
     schedule_interval='@once'
 )
 
+###################################################################################
+
 session = boto3.session.Session()
 
 s3_client = session.client(
@@ -26,18 +32,12 @@ s3_client = session.client(
     aws_secret_access_key='wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'
 )
 
-#region = session.region_name
-bucket_name='bucket-from-airflow-cuatro'
+###################################################################################
 
 def inicio(**kwargs):
     print("Iniciando proceso...")
 
-def bucket(bucket_name=bucket_name, s3_client=s3_client, region='us-west-2'):
-
-    print('Region: ', region)
-    print('Bucket name: ', bucket_name)
-    print('s3 client: ', s3_client)
-
+def bucket(bucket_name='raw-data', s3_client=s3_client, region='us-west-2'):
     try:
         location = {'LocationConstraint': region}
         s3_client.create_bucket(Bucket=bucket_name,
@@ -45,6 +45,8 @@ def bucket(bucket_name=bucket_name, s3_client=s3_client, region='us-west-2'):
         print('Bucket creado exitosamente')
     except:
         print('El bucket ya existe')
+
+###################################################################################
 
 create_bucket = PythonOperator(task_id='create_bucket',
                             python_callable=bucket,
@@ -54,4 +56,8 @@ inicio = PythonOperator(task_id='inicio',
                         python_callable=inicio,
                         dag=dag)
 
+###################################################################################
+
 inicio >> create_bucket
+
+###################################################################################
