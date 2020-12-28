@@ -38,9 +38,9 @@ def bucket(bucket_name, s3_client=s3_client, region=region):
     except:
         print('El bucket ya existe')
 
-create_bucket = PythonOperator(task_id='create_bucket',
-python_callable=bucket('bucket-from-airflow-dos'),
-dag=dag)
+# create_bucket = PythonOperator(task_id='create_bucket',
+# python_callable=bucket('bucket-from-airflow-dos'),
+# dag=dag)
 
 inicio = PythonOperator(task_id='inicio',
                         python_callable=inicio,
