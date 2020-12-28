@@ -37,7 +37,7 @@ s3_client = session.client(
 def inicio(**kwargs):
     print("Iniciando proceso...")
 
-def bucket(bucket_name='raw-data', s3_client=s3_client, region='us-west-2'):
+def bucket(bucket_name='raw-structured', s3_client=s3_client, region='us-west-2'):
     try:
         location = {'LocationConstraint': region}
         s3_client.create_bucket(Bucket=bucket_name,
