@@ -20,7 +20,7 @@ dag = DAG(
 )
 
 create_bucket = PythonOperator(task_id='create_bucket',
-python_callable=create_bucket('bucket-from-airflow'),
+python_callable=create_bucket.create_bucket('bucket-from-airflow'),
 dag=dag)
 
 create_bucket
