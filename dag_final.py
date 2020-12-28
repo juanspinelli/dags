@@ -29,7 +29,7 @@ region = session.region_name
 def inicio(**kwargs):
     print("Iniciando proceso...")
 
-def bucket(bucket_name='bucket-from-airflow-dos', s3_client=s3_client, region=region):
+def bucket(bucket_name='bucket-from-airflow-tres', s3_client=s3_client, region=region):
     try:
         location = {'LocationConstraint': region}
         s3_client.create_bucket(Bucket=bucket_name,
